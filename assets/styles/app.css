@@ -1,3 +1,106 @@
 body {
-    background-color: skyblue;
+    margin: 0;
+    font-family: Arial, sans-serif;
+}
+
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 240px;
+    height: 100vh;
+    background-color: #FFFFFF;
+    padding-top: 20px;
+}
+
+.sidebar a {
+    display: block;
+    color: #202224;
+    text-decoration: none;
+    padding: 15px 20px;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
+
+.sidebar a:hover {
+    background-color: #4880FF;
+    color: #FFFFFF;
+}
+
+.sidebar a.active {
+    background-color: #4880FF;
+    color: #FFFFFF;
+}
+
+.content {
+    margin-left: 220px;
+    padding: 20px;
+}
+
+.main-container {
+    margin-left: 240px;
+}
+
+.topbar {
+    height: 70px;
+    background-color: #FFFFFF;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    padding: 0 30px;
+
+    border-bottom: 1px solid #E5E7EB;
+}
+
+.search-form {
+    flex: 1;
+}
+
+.search-input {
+    width: 100%;
+    padding: 12px 16px;
+
+    border: 1px solid #D5D5D5;
+    border-radius: 18px;
+
+    font-size: 14px;
+}
+
+.login-btn {
+    margin-left: 20px;
+
+    background-color: #4880FF;
+    color: white;
+
+    text-decoration: none;
+
+    padding: 12px 20px;
+    border-radius: 8px;
+}
+
+.login-btn:hover {
+    background-color: #376de6;
+}
+
+.search-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.search-icon {
+    position: absolute;
+    left: 10px;
+    color: #888;
+    pointer-events: none; /* pour pouvoir cliquer dans l’input */
+}
+
+.search-input {
+    padding-left: 35px; /* espace pour l’icône */
+}
+
+.bi {
+    margin-right: 10px;
 }
