@@ -32,8 +32,13 @@ body {
     color: #FFFFFF;
 }
 
-.content {
+.authenticated .content {
     margin-left: 220px;
+    padding: 20px;
+}
+
+.guest .content {
+    margin-left: 0;
     padding: 20px;
 }
 
