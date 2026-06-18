@@ -23,7 +23,11 @@
                     Créer un compte
                 </h1>
 
-                {{ form_start(registrationForm) }}
+                {{ form_start(registrationForm, {
+                    attr: {
+                        novalidate: 'novalidate'
+                    }
+                }) }}
 
                     <div class="mb-3">
                         {{ form_row(registrationForm.firstname) }}

@@ -24,6 +24,7 @@ public function buildForm(FormBuilderInterface $builder, array $options): void
         ])
         ->add('username', TextType::class, [
             'label' => 'Nom d\'utilisateur',
+            'required' => false,
         ])
         ->add('email', EmailType::class)
         ->add('plainPassword', RepeatedType::class, [
