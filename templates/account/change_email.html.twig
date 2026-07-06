@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+    <h1>Confirme ton changement d'email</h1>
+
+    <p>
+        Tu as demandé à modifier ton adresse email sur ton compte.
+    </p>
+
+    <p>
+        Pour valider ce changement, clique sur le lien ci-dessous :
+    </p>
+
+    <p>
+        {#<a href="{{ confirmUrl }}">#}
+        <a href="#">
+            Confirmer mon nouvel email
+        </a>
+    </p>
+
+    <p>
+        ⚠️ Ce lien est valable pendant 24 heures.
+    </p>
+
+    <p>
+        Si tu n'es pas à l'origine de cette demande, ignore cet email.
+    </p>
+
+    <p>
+        — LifeMap
+    </p>
+
+{% endblock %}

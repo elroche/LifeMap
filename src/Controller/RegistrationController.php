@@ -95,4 +95,40 @@ class RegistrationController extends AbstractController
 
         return $this->redirectToRoute('app_register');
     }
+
+    #[Route('/account/email/confirm/{token}', name: 'app_account_confirm_email')]
+    public function confirmEmail(string $token, EntityManagerInterface $entityManager): Response
+    {
+        $user = $entityManager->getRepository(User::class)
+        ->findOneBy(['emailChangeToken' => $token]);
+        
+        if (!$user) {
+            throw $this->createNotFoundException('Token invalide');
+        }
+
+        // On verifie qu on a une demande de changement de mail
+        if (!$user->getPendingEmail()) {
+            throw $this->createNotFoundException('Aucune demande active');
+        }
+
+        // On vérifie l'expiration AVANT toute modification
+        if ($user->getEmailChangeRequestedAt() < new \DateTimeImmutable('-1 day')) {
+            $this->addFlash('danger', 'Lien expiré.');
+            return $this->redirectToRoute('app_account');
+        }
+
+        // On change l'email
+        $user->setEmail($user->getPendingEmail());
+
+        $user->setPendingEmail(null);
+        $user->setEmailChangeToken(null);
+        $user->setEmailChangeRequestedAt(null);
+    
+        // On enregistre
+        $entityManager->flush();
+    
+        $this->addFlash('success', 'Votre email a été confirmé.');
+
+        return $this->redirectToRoute('app_account');
+    }
 }

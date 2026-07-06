@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20260611105314 extends AbstractMigration
+final class Version20260706140754 extends AbstractMigration
 {
     public function getDescription(): string
     {
@@ -20,7 +20,7 @@ final class Version20260611105314 extends AbstractMigration
     public function up(Schema $schema): void
     {
         // this up() migration is auto-generated, please modify it to your needs
-        $this->addSql('ALTER TABLE user ADD is_verified TINYINT NOT NULL, CHANGE roles roles JSON NOT NULL, CHANGE username username VARCHAR(255) DEFAULT NULL');
+        $this->addSql('ALTER TABLE user ADD pending_email VARCHAR(180) DEFAULT NULL, ADD email_change_token VARCHAR(64) DEFAULT NULL, ADD email_change_requested_at DATETIME DEFAULT NULL, CHANGE roles roles JSON NOT NULL, CHANGE username username VARCHAR(255) DEFAULT NULL');
         $this->addSql('ALTER TABLE messenger_messages CHANGE delivered_at delivered_at DATETIME DEFAULT NULL');
     }
 
@@ -28,6 +28,6 @@ final class Version20260611105314 extends AbstractMigration
     {
         // this down() migration is auto-generated, please modify it to your needs
         $this->addSql('ALTER TABLE messenger_messages CHANGE delivered_at delivered_at DATETIME DEFAULT \'NULL\'');
-        $this->addSql('ALTER TABLE user DROP is_verified, CHANGE roles roles LONGTEXT NOT NULL COLLATE `utf8mb4_bin`, CHANGE username username VARCHAR(255) DEFAULT \'NULL\'');
+        $this->addSql('ALTER TABLE user DROP pending_email, DROP email_change_token, DROP email_change_requested_at, CHANGE roles roles LONGTEXT NOT NULL COLLATE `utf8mb4_bin`, CHANGE username username VARCHAR(255) DEFAULT \'NULL\'');
     }
 }

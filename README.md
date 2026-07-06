@@ -19,3 +19,16 @@ Email :
 -   utilisation de mailpit
 -   reception des mails à ce lien : http://localhost:8025/
 -   Email de confirmation de creation de compte envoyé par support@LifeMap.fr, du nom de Support
+
+Modification et suppression du compte :
+
+-   commande : php bin/console make:form UserProfileType
+-   creation des routes edit et delete dans UserProfileType
+-   Creation de la vue edit.html.twig
+-   Modification de la vue index.html.twig pour ajouter dedans le delete
+
+Modification du mot de passe :
+
+-   Creation du formulaire, commande : php bin/console make:form ChangePasswordType
+- A ne pas lié directement a User (car contient des champs différents que User)
+

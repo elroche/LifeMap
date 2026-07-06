@@ -105,17 +105,17 @@
                         </div>
                     </form>
 
-                    <div class="dropdown h-100">
+                    <div class="dropdown h-100%">
                         <button
                             class="btn btn-light border d-flex align-items-center gap-4 dropdown-toggle"
                             type="button"
                             data-bs-toggle="dropdown"
                             aria-expanded="false"
                         >
-                            <i class="bi bi-person-circle"></i>
+                            <i class="bi bi-person user-icon"></i>
 
-                            <div class="user-info">
-                                <div class="user-name">
+                            <div>
+                                <div>
                                     {{ app.user.username ?: app.user.firstname }}
                                 </div>
 
@@ -129,7 +129,7 @@
 
                         <ul class="dropdown-menu dropdown-menu-end">
                             <li>
-                                <a class="dropdown-item" href="#">
+                                <a class="dropdown-item" href="{{ path('app_account') }}">
                                     <i class="bi bi-gear me-2"></i>
                                     Gestion du compte
                                 </a>
@@ -150,6 +150,15 @@
         {% endif %}
 
         <main class="content">
+            {% for type, messages in app.flashes %}
+                {% for message in messages %}
+                    <div class="alert alert-{{ type }} alert-dismissible fade show" role="alert">
+                        {{ message }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                    </div>
+                {% endfor %}
+            {% endfor %}
+            
             {% block body %}{% endblock %}
         </main>
 
