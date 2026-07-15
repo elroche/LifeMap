@@ -102,3 +102,26 @@ body {
 .bi {
     margin-right: 10px;
 }
+
+.password-wrapper {
+    position: relative;
+}
+
+.password-wrapper input {
+    width: 100%;
+    padding-right: 45px;
+}
+
+.toggle-password {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    
+    border: none;
+    background: transparent;
+    cursor: pointer;
+
+    color: #6c757d;
+    z-index: 10;
+}

@@ -45,17 +45,26 @@
                         </div>
 
                         <div class="mb-3">
+
                             <label for="inputPassword" class="form-label">
                                 Mot de passe
                             </label>
-                            <input
-                                type="password"
-                                name="password"
-                                id="inputPassword"
-                                class="form-control"
-                                autocomplete="current-password"
-                                required
-                            >
+
+                            <div class="password-wrapper">
+
+                                <input
+                                    type="password"
+                                    name="password"
+                                    id="inputPassword"
+                                    class="form-control password-field"
+                                    autocomplete="current-password"
+                                    required
+                                >
+                                <button type="button" class="toggle-password">
+                                    <i class="bi bi-eye-slash"></i>
+                                </button>
+                                
+                            </div>
                         </div>
 
                         <input

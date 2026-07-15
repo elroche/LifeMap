@@ -46,9 +46,19 @@
                     </div>
 
                     <div class="mb-3">
-                        {{ form_row(registrationForm.plainPassword, {
-                            label: 'Mot de passe'
-                        }) }}
+                        <div class="password-wrapper">
+                            {{ form_widget(registrationForm.plainPassword.first) }}
+                            <button type="button" class="toggle-password">
+                                <i class="bi bi-eye-slash"></i>
+                            </button>
+                        </div>
+
+                        <div class="password-wrapper mt-3">
+                            {{ form_widget(registrationForm.plainPassword.second) }}
+                            <button type="button" class="toggle-password">
+                                <i class="bi bi-eye-slash"></i>
+                            </button>
+                        </div>
                     </div>
 
                     <div class="mb-4">

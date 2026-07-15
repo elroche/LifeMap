@@ -29,17 +29,25 @@ public function buildForm(FormBuilderInterface $builder, array $options): void
         ->add('email', EmailType::class)
         ->add('plainPassword', RepeatedType::class, [
             'type' => PasswordType::class,
-                            // instead of being set onto the object directly,
-            // this is read and encoded in the controller
             'invalid_message' => 'Les mots de passe ne correspondent pas.',
             'mapped' => false,
+
             'first_options'  => [
                 'label' => 'Mot de passe',
+                'attr' => [
+                    'class' => 'password-field',
+                    'autocomplete' => 'new-password',
+                    ],
                 ],
+                
                 'second_options' => [
                     'label' => 'Confirmer le mot de passe',
+                    'attr' => [
+                        'class' => 'password-field',
+                        'autocomplete' => 'new-password',
+                    ],
                 ],
-            'attr' => ['autocomplete' => 'new-password'],
+
             'constraints' => [
                 new NotBlank(
                     message: 'Entrer un mot de passe.',
