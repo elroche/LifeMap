@@ -4,7 +4,7 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Form\RegistrationFormType;
-use App\Security\AppAuthentificatiorAuthenticator;
+use App\Security\AppAuthentificatorAuthenticator;
 use App\Security\EmailVerifier;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
@@ -74,26 +74,27 @@ class RegistrationController extends AbstractController
     }
 
     // Permet de valider que l'email fonctionne bien
-    #[Route('/verify/email', name: 'app_verify_email')]
-    public function verifyUserEmail(Request $request, TranslatorInterface $translator): Response
+    #[Route('/verify/email{id}', name: 'app_verify_email')]
+    public function verifyUserEmail(Request $request, User $user, TranslatorInterface $translator): Response
     {
-        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
-
-        // validate email confirmation link, sets User::isVerified=true and persists
-        try {
-            /** @var User $user */
-            $user = $this->getUser();
+        try {    
             $this->emailVerifier->handleEmailConfirmation($request, $user);
+    
         } catch (VerifyEmailExceptionInterface $exception) {
-            $this->addFlash('verify_email_error', $translator->trans($exception->getReason(), [], 'VerifyEmailBundle'));
-
+            $this->addFlash(
+                'verify_email_error',
+                $translator->trans($exception->getReason(), [], 'VerifyEmailBundle')
+            );
+    
             return $this->redirectToRoute('app_register');
         }
-
-        // @TODO Change the redirect on success and handle or remove the flash message in your templates
-        $this->addFlash('success', 'Your email address has been verified.');
-
-        return $this->redirectToRoute('app_register');
+    
+        $this->addFlash(
+            'success',
+            'Votre adresse e-mail a bien été confirmée.'
+        );
+    
+        return $this->redirectToRoute('app_login');    
     }
 
     #[Route('/account/email/confirm/{token}', name: 'app_account_confirm_email')]
@@ -127,7 +128,7 @@ class RegistrationController extends AbstractController
         // On enregistre
         $entityManager->flush();
     
-        $this->addFlash('success', 'Votre email a été confirmé.');
+        $this->addFlash('success', 'Votre modification d\'adresse mail a été confirmé. Veuillez vous connecter.');
 
         return $this->redirectToRoute('app_account');
     }

@@ -41,7 +41,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @var string The hashed password
      */
-    #[Assert\NotBlank(message: 'Veuillez remplir ce champ')]
+    //#[Assert\NotBlank(message: 'Veuillez remplir ce champ')]
     #[ORM\Column]
     private ?string $password = null;
 

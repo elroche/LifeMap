@@ -14,25 +14,37 @@ use App\Entity\User;
 use App\DTO\ChangePasswordDTO;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
+use App\Repository\UserRepository;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
+#[IsGranted('ROLE_USER')]
 final class AccountController extends AbstractController
 {
     #[Route('/account', name: 'app_account')]
     public function index(): Response
     {
+        if (!$this->getUser()) {
+            return $this->redirectToRoute('app_login');
+        }
+
         return $this->render('account/index.html.twig', [
             'user' => $this->getUser(),
         ]);
     }
 
+    // Modification du profil utilisateur
     #[Route('/account/edit', name: 'app_account_edit')]
     public function edit(Request $request, EntityManagerInterface $entityManager, MailerInterface $mailer): Response
     {
         /** @var User $user */
         $user = $this->getUser();
 
-        // On mémmorise l'ancien email
+        // On mémorise les anciennes valeurs
         $oldEmail = $user->getEmail();
+        $oldFirstname = $user->getFirstname();
+        $oldLastname = $user->getLastname();
+        $oldUsername = $user->getUsername();
 
         $form = $this->createForm(UserProfileType::class, $user);
         $form->handleRequest($request);
@@ -41,6 +53,11 @@ final class AccountController extends AbstractController
 
             // On enregistre le nouvel email : 
             $newEmail = $user->getEmail();
+
+            // On verifie si le profil a changé
+            $profileChanged = $oldFirstname !== $user->getFirstname()
+            || $oldLastname !== $user->getLastname()
+            || $oldUsername !== $user->getUsername();
 
             // Si l'email a bien changé
             if ($newEmail !== $oldEmail) {
@@ -56,6 +73,14 @@ final class AccountController extends AbstractController
                 $user->setEmailChangeToken($token);
                 $user->setEmailChangeRequestedAt(new \DateTimeImmutable());
 
+                // Génération du lien de confirmation
+                $confirmUrl = $this->generateUrl(
+                    'app_account_confirm_email',
+                    ['token' => $token],
+                    UrlGeneratorInterface::ABSOLUTE_URL
+                );
+
+
                 // envoi mail (mailpit)
                 $email = (new TemplatedEmail())
                     ->from('noreply@lifemap.test')
@@ -64,7 +89,7 @@ final class AccountController extends AbstractController
                     ->htmlTemplate('account/change_email.html.twig')
                     ->context([
                         'user' => $user,
-                        'token' => $token,
+                        'confirmUrl' => $confirmUrl,
                     ]);
 
                 $mailer->send($email);
@@ -79,7 +104,10 @@ final class AccountController extends AbstractController
             // Sauvegarde en BDD
             $entityManager->flush();
 
-            $this->addFlash('success', 'Profil mis à jour.');
+            // Si le profil a changé, on mets un message
+            if ($profileChanged){
+                $this->addFlash('success', 'Profil mis à jour.');
+            }
 
             return $this->redirectToRoute('app_account');
         }
@@ -89,6 +117,41 @@ final class AccountController extends AbstractController
         ]);
     }
 
+    
+    // Modification du mail de l'utilisateur
+    // Vérification de validation de changement de mail en cliquant sur le lien du mail 
+    #[Route('/account/confirm-email/{token}', name: 'app_account_confirm_email')]
+    public function confirmEmail(string $token, UserRepository $userRepository, EntityManagerInterface $entityManager): Response
+    {
+        // On recupère l'utilisateur qui a le token en question 
+        $user = $userRepository->findOneBy([
+            'emailChangeToken' => $token,
+        ]);
+
+        // On verifie qu'on a bien un ustilisateur associé
+        if (!$user) {
+            throw $this->createNotFoundException('Lien invalide.');
+        }
+
+        // On lui injecte le nouveau mot de passe 
+        $user->setEmail($user->getPendingEmail());
+
+        // Et on supprime tout ce qui etait temporaire concernant le mot de passe pour sa modification
+        $user->setPendingEmail(null);
+        $user->setEmailChangeToken(null);
+        $user->setEmailChangeRequestedAt(null);
+
+        // On enregistre les modifications
+        $entityManager->flush();
+
+        // On met un message pour que l'utilisateur en soit bien informé
+        $this->addFlash('success', 'Votre adresse email a bien été confirmée.');
+
+        return $this->redirectToRoute('app_login');
+    }
+
+
+    // Suppression du profil utilisateur
     #[Route('/account/delete', name: 'app_account_delete', methods: ['POST'])]
     public function delete(Request $request, EntityManagerInterface $entityManager): Response
     {
@@ -111,6 +174,7 @@ final class AccountController extends AbstractController
         return $this->redirectToRoute('app_account');
     }
 
+    // Modification du mot de passe de l'utilisateur
     #[Route('/account/password', name:'app_account_password')]
     public function changePassword(Request $request, EntityManagerInterface $entityManager, UserPasswordHasherInterface $passwordHasher) : Response
     {
