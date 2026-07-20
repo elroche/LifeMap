@@ -30,5 +30,17 @@ Modification et suppression du compte :
 Modification du mot de passe :
 
 -   Creation du formulaire, commande : php bin/console make:form ChangePasswordType
-- A ne pas lié directement a User (car contient des champs différents que User)
+-   A ne pas lié directement a User (car contient des champs différents que User)
 
+Mot de passe oublié :
+
+-   Installation du Bundle : ResetPasswordBundle :
+    composer require symfonycasts/reset-password-bundle
+-   Installation du générateur symfony :
+    php bin/console make:reset-password
+    Il va générer automatiquement :
+-   le contrôleur
+-   les formulaires
+-   les templates Twig
+-   le système de génération de token
+-   l'entité pour stocker les demandes de réinitialisation (si nécessaire selon la configuration)

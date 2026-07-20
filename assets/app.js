@@ -1,37 +1,31 @@
 import './stimulus_bootstrap.js';
-/*
- * Welcome to your app's main JavaScript file!
- *
- * This file will be included onto the page via the importmap() Twig function,
- * which should already be in your base.html.twig.
- */
 import './styles/app.css';
 
-console.log('This log comes from assets/app.js - welcome to AssetMapper! 🎉');
+window.addEventListener('load', () => {
 
-document.querySelectorAll('.toggle-password').forEach(button => {
+    document.querySelectorAll('.toggle-password').forEach(button => {
 
-    button.addEventListener('click', function () {
+        button.addEventListener('click', function () {
 
-        const wrapper = this.closest('.password-wrapper');
-        const input = wrapper.querySelector('input');
-        const icon = this.querySelector('i');
+            console.log("clic");
 
-        if (input.type === 'password') {
+            const wrapper = this.closest('.password-wrapper');
+            const input = wrapper.querySelector('input');
+            const icon = this.querySelector('i');
 
-            input.type = 'text';
+            if (input.type === 'password') {
 
-            icon.classList.remove('bi-eye-slash');
-            icon.classList.add('bi-eye');
+                input.type = 'text';
+                icon.classList.replace('bi-eye-slash', 'bi-eye');
 
-        } else {
+            } else {
 
-            input.type = 'password';
+                input.type = 'password';
+                icon.classList.replace('bi-eye', 'bi-eye-slash');
 
-            icon.classList.remove('bi-eye');
-            icon.classList.add('bi-eye-slash');
+            }
 
-        }
+        });
 
     });
 
