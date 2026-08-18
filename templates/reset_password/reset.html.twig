@@ -3,10 +3,74 @@
 {% block title %}Modifier le mot de passe{% endblock %}
 
 {% block body %}
-    <h1>Modifier le mot de passe</h1>
+<div class="container">
+    <div class="row justify-content-center mt-5">
+        <div class="col-md-6 col-lg-5">
 
-    {{ form_start(resetForm) }}
-        {{ form_row(resetForm.plainPassword) }}
-        <button class="btn btn-primary">Modifier le mot de passe</button>
-    {{ form_end(resetForm) }}
+            <div class="card shadow-sm border-1">
+                <div class="card-body p-4">
+
+                    {{ form_start(resetForm) }}
+
+                        {{ form_errors(resetForm) }}
+
+                        <h1 class="h3 text-center mb-4">
+                            Modifier le mot de passe
+                        </h1>
+
+                        <div class="mb-3">
+
+                            {# Premier mot de passe #}
+                            {{ form_label(resetForm.plainPassword.first) }}
+                            {{ form_errors(resetForm.plainPassword.first) }}
+
+                            <div class="password-input-wrapper">
+                                {{ form_widget(resetForm.plainPassword.first) }}
+
+                                <button type="button" class="toggle-password">
+                                    <i class="bi bi-eye-slash"></i>
+                                </button>
+                            </div>
+
+                            {# Confirmation du mot de passe #}
+                            <div class="mt-3">
+                                {{ form_label(resetForm.plainPassword.second) }}
+                                {{ form_errors(resetForm.plainPassword.second) }}
+
+                                <div class="password-input-wrapper">
+                                    {{ form_widget(resetForm.plainPassword.second) }}
+
+                                    <button type="button" class="toggle-password">
+                                        <i class="bi bi-eye-slash"></i>
+                                    </button>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <button class="btn btn-primary w-100" type="submit">
+                            Modifier le mot de passe
+                        </button>
+
+                    {{ form_end(resetForm) }}
+
+                    <hr class="my-4">
+
+                    <div class="text-center">
+                        <span class="text-muted">
+                            Vous avez retrouvé votre mot de passe ?
+                        </span>
+                        <br>
+                        <a href="{{ path('app_login') }}"
+                           class="btn btn-outline-secondary mt-2">
+                            Se connecter
+                        </a>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
 {% endblock %}

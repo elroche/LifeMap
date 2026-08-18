@@ -10,6 +10,8 @@ use Symfony\Component\Form\Extension\Core\Type\{PasswordType, RepeatedType};
 use Symfony\Component\Security\Core\Validator\Constraints\UserPassword;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints\NotCompromisedPassword;
+use Symfony\Component\Validator\Constraints\PasswordStrength;
 
 class ChangePasswordType extends AbstractType
 {
@@ -45,9 +47,12 @@ class ChangePasswordType extends AbstractType
                             'message' => 'Veuillez saisir un mot de passe.',
                         ]),
                         new Length([
-                            'min' => 6,
+                            'min' => 12,
                             'minMessage' => 'Le mot de passe doit contenir au moins {{ limit }} caractères.',
+                            'max' => 4096,
                         ]),
+                        new PasswordStrength(),
+                        new NotCompromisedPassword(),
                     ],
                 ],
             

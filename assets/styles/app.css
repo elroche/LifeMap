@@ -103,11 +103,11 @@ body {
     margin-right: 10px;
 }
 
-.password-wrapper {
+.password-input-wrapper {
     position: relative;
 }
 
-.password-wrapper input {
+.password-input-wrapper input {
     width: 100%;
     padding-right: 45px;
 }
@@ -117,7 +117,7 @@ body {
     right: 10px;
     top: 50%;
     transform: translateY(-50%);
-    
+
     border: none;
     background: transparent;
     cursor: pointer;

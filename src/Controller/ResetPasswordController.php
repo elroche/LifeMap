@@ -19,6 +19,7 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 use SymfonyCasts\Bundle\ResetPassword\Controller\ResetPasswordControllerTrait;
 use SymfonyCasts\Bundle\ResetPassword\Exception\ResetPasswordExceptionInterface;
 use SymfonyCasts\Bundle\ResetPassword\ResetPasswordHelperInterface;
+use Symfony\Component\Form\FormError;
 
 #[Route('/reset-password')]
 class ResetPasswordController extends AbstractController
@@ -106,21 +107,36 @@ class ResetPasswordController extends AbstractController
         $form = $this->createForm(ChangePasswordFormType::class);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            // A password reset token should be used only once, remove it.
-            $this->resetPasswordHelper->removeResetRequest($token);
 
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            // On recupère le nouveau mot de passe
             /** @var string $plainPassword */
             $plainPassword = $form->get('plainPassword')->getData();
 
-            // Encode(hash) the plain password, and set it.
-            $user->setPassword($passwordHasher->hashPassword($user, $plainPassword));
-            $this->entityManager->flush();
+            // On verifie que le nouveau mot de passe est différent de l'ancien
+            if ($passwordHasher->isPasswordValid($user, $plainPassword)){
+                $form->addError(
+                    new FormError('Veuillez utiliser un mot de passe différent du précédent.')
+                );            
+            } else {
+                // A password reset token should be used only once, remove it.
+                $this->resetPasswordHelper->removeResetRequest($token);
 
-            // The session is cleaned up after the password has been changed.
-            $this->cleanSessionAfterReset();
+                // Encode(hash) the plain password, and set it.
+                $user->setPassword($passwordHasher->hashPassword($user, $plainPassword));
+                $this->entityManager->flush();
 
-            return $this->redirectToRoute('app_login');
+                // The session is cleaned up after the password has been changed.
+                $this->cleanSessionAfterReset();
+
+                $this->addFlash(
+                    'success',
+                    'Votre mot de passe a bien été modifié. Veuillez vous connecter.'
+                );
+
+                return $this->redirectToRoute('app_login');
+            }
         }
 
         return $this->render('reset_password/reset.html.twig', [

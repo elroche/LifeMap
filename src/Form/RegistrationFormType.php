@@ -10,6 +10,8 @@ use Symfony\Component\Validator\Constraints\IsTrue;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Form\Extension\Core\Type\{CheckboxType, PasswordType, EmailType, SubmitType, TextType, RepeatedType};
+use Symfony\Component\Validator\Constraints\NotCompromisedPassword;
+use Symfony\Component\Validator\Constraints\PasswordStrength;
 
 class RegistrationFormType extends AbstractType
 {
@@ -40,6 +42,20 @@ public function buildForm(FormBuilderInterface $builder, array $options): void
                     ],
                 ],
                 
+                'constraints' => [
+                    new NotBlank(
+                        message: 'Veuillez entrer un mot de passe.',
+                    ),
+                    new Length(
+                        min: 12,
+                        minMessage: 'Votre mot de passe doit contenir au moins {{ limit }} caractères.',
+                        // max length allowed by Symfony for security reasons
+                        max: 4096,
+                    ),
+                    new PasswordStrength(),
+                    new NotCompromisedPassword(),
+                ],
+
                 'second_options' => [
                     'label' => 'Confirmer le mot de passe',
                     'attr' => [
@@ -47,18 +63,6 @@ public function buildForm(FormBuilderInterface $builder, array $options): void
                         'autocomplete' => 'new-password',
                     ],
                 ],
-
-            'constraints' => [
-                new NotBlank(
-                    message: 'Entrer un mot de passe.',
-                ),
-                new Length(
-                    min: 6,
-                    minMessage: 'Votre mot de passe doit contenir au moins {{ limit }} caractères',
-                    // max length allowed by Symfony for security reasons
-                    max: 4096,
-                ),
-            ],
         ])
         ->add('agreeTerms', CheckboxType::class, [
             'label' => 'Conditions générales d\'utilisation',
