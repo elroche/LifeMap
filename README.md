@@ -44,3 +44,43 @@ Mot de passe oublié :
 -   les templates Twig
 -   le système de génération de token
 -   l'entité pour stocker les demandes de réinitialisation (si nécessaire selon la configuration)
+
+Migration :
+
+-   php bin/console make:migration
+-   php bin/console doctrine:migrations:migrate
+
+Les fixtures :
+
+Installation :
+composer require --dev orm-fixtures
+Creer une nouvelle fixture :
+php bin/console make:fixture FrameworkFixtures
+Remplir la bdd :
+php bin/console doctrine:fixtures:load
+Remplir la bdd qu'avec une fixture en conservant les données des autres tables :
+php bin/console doctrine:fixtures:load --append --group=technology
+
+!!!!! IL VAME MANQUER L ENTITE EVENTFILE !!!!!
+avec comme pptés par ex :
+originalName → string
+filename → string
+path → string
+mimeType → string
+size → integer
+
+Faire les relations
+users → User → ManyToMany
+type → EventType → ManyToOne
+technologies → Technology → ManyToMany
+tools → Tool → ManyToMany
+skills → Skill → ManyToMany
+frameworks → Framework → ManyToMany
+databases → Database → ManyToMany
+apis → Api → ManyToMany
+projectManagements → ProjectManagement → ManyToMany
+libraries → Library → ManyToMany
+files → EventFile → OneToMany
+
+OU J EN SUIS :
+J ai fait les fixtures de technology et framework, faire les autres
