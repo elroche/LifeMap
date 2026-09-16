@@ -16,16 +16,14 @@ class Event
     #[ORM\Column]
     private ?int $id = null;
 
-    /**
-     * @var Collection<int, User>
-     */
-    #[ORM\ManyToMany(targetEntity: User::class, inversedBy: 'events')]
-    private Collection $users;
-
+    #[ORM\ManyToOne(inversedBy: 'events')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?User $user = null;
+    
     #[ORM\Column(length: 255)]
     private ?string $title = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $description = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
@@ -43,23 +41,12 @@ class Event
     #[ORM\Column]
     private ?int $effectif = null;
 
-    #[ORM\Column]
-    private ?bool $isFavorite = null;
+    #[ORM\Column(options: ['default' => false])]
+    private ?bool $isFavorite = false;
 
-    #[ORM\ManyToOne]
+    #[ORM\ManyToOne(inversedBy: 'events')]
+    #[ORM\JoinColumn(nullable: false)]
     private ?EventType $eventType = null;
-
-    /**
-     * @var Collection<int, Technology>
-     */
-    #[ORM\ManyToMany(targetEntity: Technology::class)]
-    private Collection $technologies;
-
-    /**
-     * @var Collection<int, Tool>
-     */
-    #[ORM\ManyToMany(targetEntity: Tool::class)]
-    private Collection $tools;
 
     /**
      * @var Collection<int, Skill>
@@ -67,47 +54,28 @@ class Event
     #[ORM\ManyToMany(targetEntity: Skill::class)]
     private Collection $skills;
 
-    /**
-     * @var Collection<int, Framework>
-     */
-    #[ORM\ManyToMany(targetEntity: Framework::class)]
-    private Collection $frameworks;
+    #[ORM\ManyToOne(inversedBy: 'events')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Category $category = null;
 
     /**
-     * @var Collection<int, Database>
+     * @var Collection<int, SubCategory>
      */
-    #[ORM\ManyToMany(targetEntity: Database::class)]
-    private Collection $databaseList;
+    #[ORM\ManyToMany(targetEntity: SubCategory::class, inversedBy: 'events')]
+    private Collection $subCategories;
+
 
     /**
-     * @var Collection<int, Api>
+     * @var Collection<int, Tag>
      */
-    #[ORM\ManyToMany(targetEntity: Api::class)]
-    private Collection $apis;
-
-    /**
-     * @var Collection<int, ProjectManagement>
-     */
-    #[ORM\ManyToMany(targetEntity: ProjectManagement::class)]
-    private Collection $projectManagements;
-
-    /**
-     * @var Collection<int, Library>
-     */
-    #[ORM\ManyToMany(targetEntity: Library::class)]
-    private Collection $libraries;
+    #[ORM\ManyToMany(targetEntity: Tag::class)]
+    private Collection $tags;
 
     public function __construct()
     {
-        $this->users = new ArrayCollection();
-        $this->technologies = new ArrayCollection();
-        $this->tools = new ArrayCollection();
         $this->skills = new ArrayCollection();
-        $this->frameworks = new ArrayCollection();
-        $this->databaseList = new ArrayCollection();
-        $this->apis = new ArrayCollection();
-        $this->projectManagements = new ArrayCollection();
-        $this->libraries = new ArrayCollection();
+        $this->subCategories = new ArrayCollection();
+        $this->tags = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -115,29 +83,18 @@ class Event
         return $this->id;
     }
 
-    /**
-     * @return Collection<int, User>
-     */
-    public function getUsers(): Collection
+    public function getUser(): ?User
     {
-        return $this->users;
+        return $this->user;
     }
 
-    public function addUser(User $user): static
+    public function setUser(?User $user): static
     {
-        if (!$this->users->contains($user)) {
-            $this->users->add($user);
-        }
+        $this->user = $user;
 
         return $this;
     }
 
-    public function removeUser(User $user): static
-    {
-        $this->users->removeElement($user);
-
-        return $this;
-    }
 
     public function getTitle(): ?string
     {
@@ -248,54 +205,6 @@ class Event
     }
 
     /**
-     * @return Collection<int, Technology>
-     */
-    public function getTechnologies(): Collection
-    {
-        return $this->technologies;
-    }
-
-    public function addTechnology(Technology $technology): static
-    {
-        if (!$this->technologies->contains($technology)) {
-            $this->technologies->add($technology);
-        }
-
-        return $this;
-    }
-
-    public function removeTechnology(Technology $technology): static
-    {
-        $this->technologies->removeElement($technology);
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Tool>
-     */
-    public function getTools(): Collection
-    {
-        return $this->tools;
-    }
-
-    public function addTool(Tool $tool): static
-    {
-        if (!$this->tools->contains($tool)) {
-            $this->tools->add($tool);
-        }
-
-        return $this;
-    }
-
-    public function removeTool(Tool $tool): static
-    {
-        $this->tools->removeElement($tool);
-
-        return $this;
-    }
-
-    /**
      * @return Collection<int, Skill>
      */
     public function getSkills(): Collection
@@ -319,122 +228,62 @@ class Event
         return $this;
     }
 
-    /**
-     * @return Collection<int, Framework>
-     */
-    public function getFrameworks(): Collection
+    public function getCategory(): ?Category
     {
-        return $this->frameworks;
+        return $this->category;
     }
 
-    public function addFramework(Framework $framework): static
+    public function setCategory(?Category $category): static
     {
-        if (!$this->frameworks->contains($framework)) {
-            $this->frameworks->add($framework);
-        }
-
-        return $this;
-    }
-
-    public function removeFramework(Framework $framework): static
-    {
-        $this->frameworks->removeElement($framework);
+        $this->category = $category;
 
         return $this;
     }
 
     /**
-     * @return Collection<int, Database>
+     * @return Collection<int, SubCategory>
      */
-    public function getDatabaseList(): Collection
+    public function getSubCategories(): Collection
     {
-        return $this->databaseList;
+        return $this->subCategories;
     }
 
-    public function addDatabaseList(Database $databaseList): static
+    public function addSubCategory(SubCategory $subCategory): static
     {
-        if (!$this->databaseList->contains($databaseList)) {
-            $this->databaseList->add($databaseList);
+        if (!$this->subCategories->contains($subCategory)) {
+            $this->subCategories->add($subCategory);
         }
 
         return $this;
     }
 
-    public function removeDatabaseList(Database $databaseList): static
+    public function removeSubCategory(SubCategory $subCategory): static
     {
-        $this->databaseList->removeElement($databaseList);
+        $this->subCategories->removeElement($subCategory);
 
         return $this;
     }
 
     /**
-     * @return Collection<int, Api>
+     * @return Collection<int, Tag>
      */
-    public function getApis(): Collection
+    public function getTags(): Collection
     {
-        return $this->apis;
+        return $this->tags;
     }
 
-    public function addApi(Api $api): static
+    public function addTag(Tag $tag): static
     {
-        if (!$this->apis->contains($api)) {
-            $this->apis->add($api);
+        if (!$this->tags->contains($tag)) {
+            $this->tags->add($tag);
         }
 
         return $this;
     }
 
-    public function removeApi(Api $api): static
+    public function removeTag(Tag $tag): static
     {
-        $this->apis->removeElement($api);
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, ProjectManagement>
-     */
-    public function getProjectManagements(): Collection
-    {
-        return $this->projectManagements;
-    }
-
-    public function addProjectManagement(ProjectManagement $projectManagement): static
-    {
-        if (!$this->projectManagements->contains($projectManagement)) {
-            $this->projectManagements->add($projectManagement);
-        }
-
-        return $this;
-    }
-
-    public function removeProjectManagement(ProjectManagement $projectManagement): static
-    {
-        $this->projectManagements->removeElement($projectManagement);
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Library>
-     */
-    public function getLibraries(): Collection
-    {
-        return $this->libraries;
-    }
-
-    public function addLibrary(Library $library): static
-    {
-        if (!$this->libraries->contains($library)) {
-            $this->libraries->add($library);
-        }
-
-        return $this;
-    }
-
-    public function removeLibrary(Library $library): static
-    {
-        $this->libraries->removeElement($library);
+        $this->tags->removeElement($tag);
 
         return $this;
     }

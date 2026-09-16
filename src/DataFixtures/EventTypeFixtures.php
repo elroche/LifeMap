@@ -20,93 +20,48 @@ class EventTypeFixtures extends Fixture implements FixtureGroupInterface
 
             /*
              * ============================================================
-             * EMPLOI / CONTRAT
+             * EMPLOI / CONTRATS
              * ============================================================
              */
 
-            'CDI',
-            'CDD',
-            'Stage',
-            'Alternance',
-            'Contrat de professionnalisation',
-            'Contrat d’apprentissage',
-            'Intérim',
-            'Freelance',
-            'Mission freelance',
-            'Mission',
-            'Emploi saisonnier',
-            'Job étudiant',
-            'Temps partiel',
-            'Temps plein',
-            'VIE',
-            'Volontariat',
-            'Bénévolat',
+            'Emploi' => '#2563EB',
+            'CDI' => '#1D4ED8',
+            'CDD' => '#3B82F6',
+            'Stage' => '#60A5FA',
+            'Alternance' => '#93C5FD',
+            'Contrat de professionnalisation' => '#2563EB',
+            'Contrat d’apprentissage' => '#1E40AF',
+            'Intérim' => '#38BDF8',
+            'Freelance' => '#0EA5E9',
+            'Mission freelance' => '#0284C7',
+            'Mission professionnelle' => '#0369A1',
+            'Emploi saisonnier' => '#7DD3FC',
+            'Job étudiant' => '#BAE6FD',
+            'Temps partiel' => '#60A5FA',
+            'Temps plein' => '#1D4ED8',
+            'VIE' => '#075985',
+            'Volontariat' => '#0C4A6E',
+            'Bénévolat' => '#164E63',
 
             /*
              * ============================================================
-             * PROJET PROFESSIONNEL
+             * PROJETS
              * ============================================================
              */
 
-            'Projet professionnel',
-            'Projet informatique',
-            'Projet individuel',
-            'Projet d’équipe',
-            'Projet client',
-            'Projet interne',
-            'Projet personnel',
-            'Projet entrepreneurial',
-            'Mission professionnelle',
-            'Mission technique',
-            'Mission de conseil',
-            'Prestation',
-            'Consulting',
-            'POC',
-            'Prototype',
-            'MVP',
-            'Proof of Concept',
-            'Hackathon',
-
-            /*
-             * ============================================================
-             * INFORMATIQUE / DÉVELOPPEMENT
-             * ============================================================
-             */
-
-            'Développement logiciel',
-            'Développement web',
-            'Développement backend',
-            'Développement frontend',
-            'Développement full-stack',
-            'Développement mobile',
-            'Développement desktop',
-            'Développement embarqué',
-            'Développement IoT',
-            'Développement API',
-            'Développement de microservices',
-            'Architecture logicielle',
-            'Architecture système',
-            'Architecture cloud',
-            'DevOps',
-            'DevSecOps',
-            'SRE',
-            'Data',
-            'Data Engineering',
-            'Data Science',
-            'Machine Learning',
-            'Intelligence artificielle',
-            'Cybersécurité',
-            'Sécurité informatique',
-            'Administration système',
-            'Administration réseau',
-            'Cloud',
-            'Infrastructure',
-            'Base de données',
-            'QA / Tests',
-            'Automatisation',
-            'R&D informatique',
-            'Veille technologique',
-            'Support informatique',
+            'Projet' => '#7C3AED',
+            'Projet personnel' => '#8B5CF6',
+            'Projet professionnel' => '#6D28D9',
+            'Projet scolaire' => '#A78BFA',
+            'Projet universitaire' => '#C4B5FD',
+            'Projet étudiant' => '#DDD6FE',
+            'Projet informatique' => '#7C3AED',
+            'Projet d’équipe' => '#9333EA',
+            'Projet collaboratif' => '#A855F7',
+            'Projet associatif' => '#C026D3',
+            'Projet entrepreneurial' => '#DB2777',
+            'Projet de recherche' => '#6D28D9',
+            'Projet de fin d’études' => '#5B21B6',
 
             /*
              * ============================================================
@@ -114,53 +69,46 @@ class EventTypeFixtures extends Fixture implements FixtureGroupInterface
              * ============================================================
              */
 
-            'Formation',
-            'Formation professionnelle',
-            'Formation technique',
-            'Formation informatique',
-            'Formation en ligne',
-            'Formation interne',
-            'Formation externe',
-            'Autoformation',
-            'Cours',
-            'Atelier',
-            'Workshop',
-            'Bootcamp',
-            'Tutoriel',
-            'Certification',
-            'Préparation à une certification',
-            'Apprentissage',
-            'Mentorat',
-            'Coaching',
-            'Conférence technique',
+            'Formation' => '#16A34A',
+            'Formation professionnelle' => '#15803D',
+            'Formation technique' => '#22C55E',
+            'Formation en ligne' => '#4ADE80',
+            'Formation interne' => '#86EFAC',
+            'Formation externe' => '#10B981',
+            'Cours' => '#059669',
+            'Atelier' => '#047857',
+            'Workshop' => '#065F46',
+            'Bootcamp' => '#166534',
+            'Autoformation' => '#34D399',
+            'Apprentissage' => '#6EE7B7',
+            'Certification' => '#14B8A6',
+            'Préparation à une certification' => '#0D9488',
+            'Mentorat' => '#0F766E',
+            'Coaching' => '#115E59',
 
             /*
              * ============================================================
-             * ÉTUDES / ÉCOLE
+             * ÉTUDES
              * ============================================================
              */
 
-            'École',
-            'Université',
-            'Études',
-            'Projet scolaire',
-            'Projet universitaire',
-            'Projet étudiant',
-            'Travail pratique',
-            'TP',
-            'TD',
-            'Cours scolaire',
-            'Cours universitaire',
-            'Examen',
-            'Évaluation',
-            'Devoir',
-            'Mémoire',
-            'Thèse',
-            'Soutenance',
-            'Rapport de stage',
-            'Projet de fin d’études',
-            'PFE',
-            'Projet de diplôme',
+            'Études' => '#0891B2',
+            'École' => '#0E7490',
+            'Université' => '#155E75',
+            'Cours universitaire' => '#06B6D4',
+            'Cours scolaire' => '#22D3EE',
+            'Travail pratique' => '#67E8F9',
+            'TP' => '#A5F3FC',
+            'TD' => '#CFFAFE',
+            'Devoir' => '#164E63',
+            'Examen' => '#0E7490',
+            'Évaluation' => '#0891B2',
+            'Mémoire' => '#155E75',
+            'Thèse' => '#164E63',
+            'Soutenance' => '#083344',
+            'Rapport de stage' => '#0E7490',
+            'PFE' => '#155E75',
+            'Projet de diplôme' => '#164E63',
 
             /*
              * ============================================================
@@ -168,32 +116,31 @@ class EventTypeFixtures extends Fixture implements FixtureGroupInterface
              * ============================================================
              */
 
-            'Séminaire',
-            'Séminaire professionnel',
-            'Séminaire technique',
-            'Conférence',
-            'Conférence informatique',
-            'Conférence professionnelle',
-            'Meetup',
-            'Table ronde',
-            'Webinaire',
-            'Salon professionnel',
-            'Salon informatique',
-            'Forum',
-            'Journée professionnelle',
-            'Journée technique',
-            'Networking',
-            'Événement professionnel',
-            'Afterwork',
-            'Team Building',
-            'Réunion',
-            'Réunion technique',
-            'Réunion client',
-            'Présentation',
-            'Démonstration',
-            'Kick-off',
-            'Rétrospective',
-            'Workshop d’équipe',
+            'Conférence' => '#EA580C',
+            'Conférence technique' => '#C2410C',
+            'Conférence professionnelle' => '#9A3412',
+            'Séminaire' => '#F97316',
+            'Séminaire technique' => '#EA580C',
+            'Séminaire professionnel' => '#C2410C',
+            'Meetup' => '#FB923C',
+            'Webinaire' => '#FDBA74',
+            'Salon professionnel' => '#F59E0B',
+            'Salon étudiant' => '#D97706',
+            'Salon informatique' => '#B45309',
+            'Forum' => '#F97316',
+            'Forum professionnel' => '#EA580C',
+            'Networking' => '#D97706',
+            'Afterwork' => '#B45309',
+            'Journée professionnelle' => '#C2410C',
+            'Journée technique' => '#9A3412',
+            'Table ronde' => '#FB923C',
+            'Présentation' => '#F59E0B',
+            'Démonstration' => '#D97706',
+            'Réunion' => '#EA580C',
+            'Réunion technique' => '#C2410C',
+            'Réunion client' => '#9A3412',
+            'Team Building' => '#F97316',
+            'Workshop d’équipe' => '#FB923C',
 
             /*
              * ============================================================
@@ -201,65 +148,19 @@ class EventTypeFixtures extends Fixture implements FixtureGroupInterface
              * ============================================================
              */
 
-            'Concours',
-            'Compétition',
-            'Compétition informatique',
-            'Compétition sportive',
-            'Concours de programmation',
-            'Challenge technique',
-            'Challenge informatique',
-            'Hackathon',
-            'Game Jam',
-            'CTF',
-            'Capture The Flag',
-            'Olympiade',
-            'Tournoi',
-            'Challenge étudiant',
-
-            /*
-             * ============================================================
-             * SPORT
-             * ============================================================
-             */
-
-            'Sport',
-            'Entraînement sportif',
-            'Compétition sportive',
-            'Tournoi sportif',
-            'Match',
-            'Course',
-            'Randonnée',
-            'Cyclisme',
-            'Natation',
-            'Fitness',
-            'Musculation',
-            'Football',
-            'Basketball',
-            'Tennis',
-            'Athlétisme',
-            'Arts martiaux',
-            'Sports collectifs',
-            'Sports individuels',
-
-            /*
-             * ============================================================
-             * CRÉATIF / PERSONNEL
-             * ============================================================
-             */
-
-            'Projet personnel',
-            'Projet créatif',
-            'Projet artistique',
-            'Projet hobby',
-            'Loisir',
-            'Activité personnelle',
-            'Création',
-            'Écriture',
-            'Photographie',
-            'Musique',
-            'Dessin',
-            'Vidéo',
-            'Design',
+            'Concours' => '#DC2626',
+            'Compétition' => '#B91C1C',
+            'Challenge' => '#EF4444',
+            'Challenge technique' => '#DC2626',
+            'Challenge étudiant' => '#F87171',
+            'Concours de programmation' => '#991B1B',
+            'Compétition informatique' => '#B91C1C',
+            'Hackathon' => '#E11D48',
+            'Game Jam' => '#BE123C',
+            'CTF' => '#9F1239',
+            'Tournoi' => '#EF4444',
+            'Compétition sportive' => '#DC2626',
+            'Tournoi sportif' => '#B91C1C',
 
             /*
              * ============================================================
@@ -267,34 +168,15 @@ class EventTypeFixtures extends Fixture implements FixtureGroupInterface
              * ============================================================
              */
 
-            'Entrepreneuriat',
-            'Création d’entreprise',
-            'Startup',
-            'Projet entrepreneurial',
-            'Business',
-            'Business Plan',
-            'Incubation',
-            'Accélération',
-            'Pitch',
-            'Présentation investisseurs',
-            'Levée de fonds',
-            'Networking entrepreneurial',
-
-            /*
-             * ============================================================
-             * ASSOCIATIF / COMMUNAUTÉ
-             * ============================================================
-             */
-
-            'Association',
-            'Projet associatif',
-            'Bénévolat',
-            'Événement associatif',
-            'Action collective',
-            'Engagement communautaire',
-            'Communauté',
-            'Groupe de travail',
-            'Projet collaboratif',
+            'Entrepreneuriat' => '#DB2777',
+            'Création d’entreprise' => '#BE185D',
+            'Startup' => '#EC4899',
+            'Business' => '#F472B6',
+            'Business Plan' => '#DB2777',
+            'Incubation' => '#BE185D',
+            'Accélération' => '#9D174D',
+            'Pitch' => '#F43F5E',
+            'Levée de fonds' => '#E11D48',
 
             /*
              * ============================================================
@@ -302,36 +184,48 @@ class EventTypeFixtures extends Fixture implements FixtureGroupInterface
              * ============================================================
              */
 
-            'Recherche',
-            'Recherche scientifique',
-            'Recherche appliquée',
-            'Innovation',
-            'R&D',
-            'Expérimentation',
-            'Étude',
-            'Étude technique',
-            'Étude de faisabilité',
-            'Prototype',
-            'POC',
-            'Expérience',
-            'Projet de recherche',
+            'Recherche' => '#4F46E5',
+            'Recherche scientifique' => '#4338CA',
+            'Recherche appliquée' => '#3730A3',
+            'Innovation' => '#6366F1',
+            'R&D' => '#4F46E5',
+            'Expérimentation' => '#818CF8',
+            'Étude' => '#A5B4FC',
+            'Étude technique' => '#6366F1',
+            'Étude de faisabilité' => '#4F46E5',
+            'Prototype' => '#7C3AED',
+            'POC' => '#6D28D9',
+            'MVP' => '#5B21B6',
 
             /*
              * ============================================================
-             * PERSONNEL / ORGANISATION
+             * PERSONNEL
              * ============================================================
              */
 
-            'Rendez-vous',
-            'Événement personnel',
-            'Voyage',
-            'Déplacement',
-            'Vacances',
-            'Organisation personnelle',
-            'Objectif personnel',
-            'Projet personnel',
-            'Activité',
-            'Sortie',
+            'Activité personnelle' => '#CA8A04',
+            'Projet personnel' => '#EAB308',
+            'Loisir' => '#FACC15',
+            'Voyage' => '#F59E0B',
+            'Déplacement' => '#D97706',
+            'Vacances' => '#FBBF24',
+            'Sortie' => '#FDE047',
+            'Événement personnel' => '#EAB308',
+            'Rendez-vous' => '#CA8A04',
+            'Objectif personnel' => '#A16207',
+
+            /*
+             * ============================================================
+             * ASSOCIATIF
+             * ============================================================
+             */
+
+            'Association' => '#0891B2',
+            'Événement associatif' => '#06B6D4',
+            'Action collective' => '#22D3EE',
+            'Engagement associatif' => '#0E7490',
+            'Engagement communautaire' => '#155E75',
+            'Projet communautaire' => '#164E63',
 
             /*
              * ============================================================
@@ -339,16 +233,19 @@ class EventTypeFixtures extends Fixture implements FixtureGroupInterface
              * ============================================================
              */
 
-            'Événement',
-            'Autre',
+            'Événement' => '#64748B',
+            'Autre' => '#94A3B8',
         ];
 
-        // Supprime les doublons éventuels.
-        $eventTypes = array_unique($eventTypes);
-
-        foreach ($eventTypes as $name) {
+        /*
+         * Création des EventType
+         */
+        foreach ($eventTypes as $name => $color) {
             $eventType = new EventType();
-            $eventType->setName($name);
+
+            $eventType
+                ->setName($name)
+                ->setColor($color);
 
             $manager->persist($eventType);
         }

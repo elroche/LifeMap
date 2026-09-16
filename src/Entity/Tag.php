@@ -2,23 +2,27 @@
 
 namespace App\Entity;
 
-use App\Repository\SkillRepository;
+use App\Repository\TagRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: SkillRepository::class)]
-class Skill
+#[ORM\Entity(repositoryClass: TagRepository::class)]
+class Tag
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 100)]
     private ?string $name = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $description = null;
+
+    #[ORM\ManyToOne(inversedBy: 'tags')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?TagType $tagType = null;
 
     public function getId(): ?int
     {
@@ -45,6 +49,18 @@ class Skill
     public function setDescription(?string $description): static
     {
         $this->description = $description;
+
+        return $this;
+    }
+
+    public function getTagType(): ?TagType
+    {
+        return $this->tagType;
+    }
+
+    public function setTagType(?TagType $tagType): static
+    {
+        $this->tagType = $tagType;
 
         return $this;
     }

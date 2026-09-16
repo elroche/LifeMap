@@ -2,14 +2,14 @@
 
 namespace App\Entity;
 
-use App\Repository\EventTypeRepository;
-use Doctrine\DBAL\Types\Types;
-use Doctrine\ORM\Mapping as ORM;
+use App\Repository\SubCategoryRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
+use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: EventTypeRepository::class)]
-class EventType
+#[ORM\Entity(repositoryClass: SubCategoryRepository::class)]
+class SubCategory
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -19,17 +19,19 @@ class EventType
     #[ORM\Column(length: 100)]
     private ?string $name = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $color = null;
-
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $description = null;
+
+    #[ORM\ManyToOne(inversedBy: 'subCategories')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Category $category = null;
 
     /**
      * @var Collection<int, Event>
      */
-    #[ORM\OneToMany(mappedBy: 'eventType', targetEntity: Event::class)]
+    #[ORM\ManyToMany(targetEntity: Event::class, mappedBy: 'subCategories')]
     private Collection $events;
+
 
     public function __construct()
     {
@@ -53,18 +55,6 @@ class EventType
         return $this;
     }
 
-    public function getColor(): ?string
-    {
-        return $this->color;
-    }
-
-    public function setColor(string $color): static
-    {
-        $this->color = $color;
-
-        return $this;
-    }
-
     public function getDescription(): ?string
     {
         return $this->description;
@@ -73,6 +63,18 @@ class EventType
     public function setDescription(?string $description): static
     {
         $this->description = $description;
+
+        return $this;
+    }
+
+    public function getCategory(): ?Category
+    {
+        return $this->category;
+    }
+
+    public function setCategory(?Category $category): static
+    {
+        $this->category = $category;
 
         return $this;
     }
@@ -89,11 +91,18 @@ class EventType
     {
         if (!$this->events->contains($event)) {
             $this->events->add($event);
-            $event->setEventType($this);
+            $event->addSubCategory($this);
         }
 
         return $this;
     }
 
+    public function removeEvent(Event $event): static
+    {
+        if ($this->events->removeElement($event)) {
+            $event->removeSubCategory($this);
+        }
 
+        return $this;
+    }
 }

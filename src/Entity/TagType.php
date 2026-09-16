@@ -2,14 +2,14 @@
 
 namespace App\Entity;
 
-use App\Repository\EventTypeRepository;
-use Doctrine\DBAL\Types\Types;
-use Doctrine\ORM\Mapping as ORM;
+use App\Repository\TagTypeRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
+use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: EventTypeRepository::class)]
-class EventType
+#[ORM\Entity(repositoryClass: TagTypeRepository::class)]
+class TagType
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -19,21 +19,18 @@ class EventType
     #[ORM\Column(length: 100)]
     private ?string $name = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $color = null;
-
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $description = null;
 
     /**
-     * @var Collection<int, Event>
+     * @var Collection<int, Tag>
      */
-    #[ORM\OneToMany(mappedBy: 'eventType', targetEntity: Event::class)]
-    private Collection $events;
+    #[ORM\OneToMany(targetEntity: Tag::class, mappedBy: 'tagType')]
+    private Collection $tags;
 
     public function __construct()
     {
-        $this->events = new ArrayCollection();
+        $this->tags = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -53,18 +50,6 @@ class EventType
         return $this;
     }
 
-    public function getColor(): ?string
-    {
-        return $this->color;
-    }
-
-    public function setColor(string $color): static
-    {
-        $this->color = $color;
-
-        return $this;
-    }
-
     public function getDescription(): ?string
     {
         return $this->description;
@@ -78,22 +63,32 @@ class EventType
     }
 
     /**
-     * @return Collection<int, Event>
+     * @return Collection<int, Tag>
      */
-    public function getEvents(): Collection
+    public function getTags(): Collection
     {
-        return $this->events;
+        return $this->tags;
     }
 
-    public function addEvent(Event $event): static
+    public function addTag(Tag $tag): static
     {
-        if (!$this->events->contains($event)) {
-            $this->events->add($event);
-            $event->setEventType($this);
+        if (!$this->tags->contains($tag)) {
+            $this->tags->add($tag);
+            $tag->setTagType($this);
         }
 
         return $this;
     }
 
+    public function removeTag(Tag $tag): static
+    {
+        if ($this->tags->removeElement($tag)) {
+            // set the owning side to null (unless already changed)
+            if ($tag->getTagType() === $this) {
+                $tag->setTagType(null);
+            }
+        }
 
+        return $this;
+    }
 }
